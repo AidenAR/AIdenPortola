@@ -5,6 +5,7 @@ Internal operations dashboard for monitoring and managing stablecoin settlements
 ## Quick Start
 
 ```bash
+cd portola-ops-dashboard
 npm install
 npm run dev
 ```
