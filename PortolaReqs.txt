@@ -1,0 +1,138 @@
+PORTOLA
+Mission Control
+
+
+
+Frontend Engineering
+Take-Home Technical Interview
+Detail	Description
+Duration	45 Minutes
+Format	Live Coding on Your Local Machine
+Recording	Loom (Screen and Camera)
+AI-Enabled	Yes. See guidelines inside.
+
+CONFIDENTIAL  This document is proprietary to Portola. Do not distribute.
+ 
+Before You Begin
+Please read these instructions carefully before starting the exercise. This take-home interview is designed to evaluate your ability to ship a functional product quickly, make sound UX decisions under pressure, and demonstrate modern development fluency.
+
+What We Are Evaluating
+Competency	What We Are Looking For
+Zero-to-One Speed	How quickly and effectively you scaffold a working application from scratch.
+AI Fluency	Your ability to leverage AI tools effectively as a development multiplier.
+UX Instincts	The design choices you make when requirements are ambiguous or incomplete.
+Concurrency Handling	How you manage real-time data, race conditions, and partial failures.
+Code Quality	Clean architecture, clear naming, and maintainable patterns.
+
+
+Recording Requirements
+You must record your entire session using Loom (or an equivalent screen recording tool with webcam). This is a mandatory part of your submission.
+
+Setup: If you do not have a Loom account, you can sign up for free at loom.com. Ensure both your screen and camera are recording before you begin.
+
+Your recording should capture
+•   Your full screen (IDE, browser, terminal) throughout the entire session.
+•   Your face via webcam so we can observe how you think through problems.
+•   Your thought process. Talk through your decisions as you code. Narrate what you are doing and why.
+•   Any AI tool interactions, including your prompts, the responses you receive, and how you use the output.
+
+
+AI Usage Policy
+This interview is AI-enabled: You are encouraged to use AI tools (GitHub Copilot, ChatGPT, Claude, Cursor, and similar) during this exercise. At Portola, we believe AI fluency is a core engineering skill. We want to see how you use these tools, not whether you avoid them.
+
+What we are watching for
+•   How you prompt AI tools and what context you provide.
+•   Whether you review, refine, and understand AI-generated output before using it.
+•   How you debug when AI-generated code does not work as expected.
+•   Your ability to maintain velocity while ensuring quality.
+
+
+Submission Checklist
+1.   Loom recording link (screen and webcam, narrated).
+2.   GitHub repository link (public or invite our team).
+3.   Brief README with setup instructions (npm install && npm start should work).
+4.   Any notes on trade-offs, shortcuts taken, or things you would improve with more time.
+
+Each phase builds on the previous one. If you get stuck on a phase, move on and come back to it. A working MVP with rough edges is better than a perfect Phase 1 with nothing else.
+ 
+The Challenge
+You are building the Portola Ops Dashboard, the internal tool our operations team uses to monitor and manage stablecoin settlements. Work through each phase sequentially. Each phase introduces new requirements that build on your previous work.
+
+Phase 1: The MVP
+Estimated time: approximately 15 minutes
+Build a functional settlement monitoring dashboard from scratch. This is your foundation. Prioritize getting something working on screen quickly.
+Requirements
+1.   Scaffold. Spin up a new React/Next.js app (or your preferred frontend stack).
+2.   Mock Data. Generate 50 realistic transactions with the following fields:
+•   ID (unique identifier)
+•   Client Name
+•   Amount (USD)
+•   Status, one of: Pending, Cleared, or Failed
+•   Timestamp
+
+Data Tip: Make the data realistic. Include a mix of small amounts (under $1,000) and large institutional transfers (over $50,000) to create a representative dataset.
+
+3.   The Grid. Display all 50 transactions in a clean, readable table.
+4.   The Action. Add a Clear Funds button next to every Pending transaction.
+•   Simulation: When clicked, call a mock API function that takes 1.5 seconds to resolve.
+•   UX: The button must display Processing... and be disabled while the mock API is resolving.
+•   Result: On success, the transaction status changes to Cleared and the button disappears.
+
+
+Phase 2: Compliance
+Estimated time: approximately 10 minutes
+Compliance Update: New regulatory rules have been issued for large transfers. Implement the following changes to your existing dashboard.
+
+Requirements
+1.   High-Value Flag. Any transaction with an amount over $10,000 must be visually highlighted in red. The entire row should be clearly distinguishable from standard transactions.
+2.   The Lock. The Clear Funds button must be disabled (locked) on all high-value transactions. Users should not be able to clear funds on transactions over $10,000 under normal operation.
+3.   The Override. Implement a Super Admin toggle at the top of the page.
+•   Default state: OFF. High-value transactions remain locked.
+•   When toggled ON: The lock is removed and high-value transactions can be cleared normally.
+•   This toggle should be clearly visible and its current state obvious to the user.
+
+
+Phase 3: Live Fire
+Estimated time: approximately 10 minutes
+The system is now live. Transactions are streaming in real-time from the blockchain. Your dashboard must handle continuous incoming data without degrading usability.
+Requirements
+1.   The Feed. Set up a simulation that adds a new transaction to the top of the list every 2 seconds.
+2.   The UX Challenge. Consider this scenario: you are about to click Clear on Row 3. A new transaction appears at the top, pushing all rows down. You accidentally click the wrong row.
+3.   The Fix. Build a mechanism so the UI remains stable and usable even while data is actively streaming in.
+
+Hint: How does Twitter/X handle new posts appearing in a live feed? What pattern do they use to prevent exactly this kind of disruption?
+
+
+Phase 4: Batch Settlement
+Estimated time: approximately 10 minutes
+We have a backlog. Clicking through transactions one by one is too slow. Build batch processing capabilities with resilient error handling.
+Requirements
+1.   Selection. Add checkboxes to select multiple Pending transactions.
+2.   Bulk Action. Add a Clear Selected button that processes all selected transactions.
+3.   The Chaos. Modify your mock API so it has a 10% chance of failure (throwing an error) on any individual call.
+4.   Optimistic Settlement. Implement resilient batch processing with the following behavior:
+•   Run all selected transactions concurrently. Do not wait for one to finish before starting the next.
+•   If 9 out of 10 succeed and 1 fails: the 9 should become Cleared and the 1 should revert to Pending (or show as Failed).
+•   Each transaction result should be handled independently.
+
+CONSTRAINT
+Do NOT use Promise.all() for this batch operation. If one promise rejects inside Promise.all, the entire batch fails. You need each transaction to resolve or reject independently. Consider alternatives like Promise.allSettled() or handling each promise individually.
+ 
+Wrapping Up
+When your 45 minutes are up (or when you have completed all four phases), stop your Loom recording and prepare your submission.
+
+How to Submit
+1.   Stop your Loom recording and copy the share link.
+2.   Push your code to a GitHub repository (public, or invite our team).
+3.   Ensure your project runs with a simple setup (npm install and npm run dev or equivalent).
+4.   Reply to the email that sent you this document with your Loom link and GitHub link.
+5.   Include a brief note on any trade-offs, areas you would improve, or decisions worth calling out.
+
+
+Final Notes
+We know 45 minutes is tight. That is intentional. We are not looking for pixel-perfect polish. We are looking for signal on how you prioritize, how you move, and how you think. A working product with rough edges tells us more than a beautiful component that does not function.
+If you get stuck, talk through it on camera. Show us your debugging process. Move forward and come back. The recording is your chance to show us who you are as an engineer beyond just the code.
+
+Good luck. We are excited to see what you build.
+The Portola Engineering Team
+
