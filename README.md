@@ -12,9 +12,12 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
-
 ## LOOM
 https://www.loom.com/share/a8ba3df7e6bd458c9865b2afe8b3745e
+
+
+
+<img width="1717" height="1015" alt="image" src="https://github.com/user-attachments/assets/6a2f7951-8b7a-4a4c-b668-1699ab01aaa5" />
 
 ## Features
 
