@@ -12,6 +12,10 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
+
+## LOOM
+https://www.loom.com/share/a8ba3df7e6bd458c9865b2afe8b3745e
+
 ## Features
 
 ### Phase 1 — MVP
